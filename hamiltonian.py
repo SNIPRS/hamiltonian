@@ -14,6 +14,22 @@ import cirq
 import openfermion as of
 import openfermionpyscf as ofpyscf
 
+from openfermion.transforms import *
+from openfermion.chem import MolecularData
+from openfermion.transforms import binary_code_transform
+from openfermion.transforms import get_fermion_operator
+from openfermion.linalg import eigenspectrum
+from openfermion.transforms import normal_ordered, reorder
+from openfermion.utils import up_then_down
+
+I = np.identity(2)
+X = np.array([[0,1],[1,0]])
+Y = np.array([[0,-1j],[1j,0]])
+Z = np.array([[1,0],[0,-1]])
+Paulis = [I, X, Y, Z]
+sPaulis = ['I', 'X', 'Y', 'Z']
+Paulis_dic = {'I':I, 'X':X, 'Y':Y, 'Z':Z}
+
 I = np.identity(2)
 X = np.array([[0,1],[1,0]])
 Y = np.array([[0,-1j],[1j,0]])
@@ -112,10 +128,16 @@ def pauli_from_typle(n, paulis):
     pauli_matrix = reduce(np.kron, matrices)
     return pauli_string, pauli_matrix
 
-def Paulis_from_Molecule(geometry, basis, multiplicity, charge):
-    ham = ofpyscf.generate_molecular_hamiltonian(
-    geometry, basis, multiplicity, charge)
-    ham_ferm_op = of.get_fermion_operator(ham)
+def Paulis_from_Molecule(ham=None, geometry=None, basis=None, 
+                         multiplicity=None, charge=None):
+    if ham is None:
+        ham = ofpyscf.generate_molecular_hamiltonian(geometry, 
+                                                     basis, 
+                                                     multiplicity, 
+                                                     charge)
+        ham_ferm_op = of.get_fermion_operator(ham)
+    else:
+        ham_ferm_op = ham
     ham_jw = of.jordan_wigner(ham_ferm_op)
     dic = ham_jw.terms
     typles = list(ham_jw.terms.keys())
@@ -133,4 +155,14 @@ def Paulis_from_Molecule(geometry, basis, multiplicity, charge):
     Hs, hs, Ps = np.array(Hs), np.real(np.array(hs)), np.array(Ps)
     # H = np.sum([hs[i]*Hs[i] for i in range(len(typles))], axis=0)
     H = of.get_sparse_operator(ham_jw).A
+    return n, H, Hs, hs, Ps
+
+def LiH_hamiltonian():
+    geometry = [('Li', (0., 0., 0.)), ('H', (0., 0., 1.45))]
+    molecule = MolecularData(geometry, 'sto-3g', 1,
+                             description="1.45")
+    molecule.load()
+    molecular_hamiltonian = molecule.get_molecular_hamiltonian(occupied_indices = [0], active_indices = [1,2])
+    ham = normal_ordered(get_fermion_operator(molecular_hamiltonian))
+    n, H, Hs, hs, Ps = Paulis_from_Molecule(ham)
     return n, H, Hs, hs, Ps
