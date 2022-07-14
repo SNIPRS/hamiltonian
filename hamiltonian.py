@@ -6,7 +6,6 @@ try:
     import openfermionpyscf as ofpyscf
 except ImportError:
     print("Installing OpenFermion and OpenFermion-PySCF...")
-    !pip install openfermion openfermionpyscf --quiet
 
 from scipy.sparse import linalg
 

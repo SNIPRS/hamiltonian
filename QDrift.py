@@ -7,8 +7,6 @@ from multiprocessing import Pool
 import time
 from tqdm import trange, tqdm
 
-%matplotlib inline
-
 def QDrift(hs, t, eps, N=None):
     """
     Input: A list of Hamiltonian terms Hs, time t, precision eps
@@ -54,7 +52,7 @@ def rand_rho(n):
     return rho
 
 
-def Error_cost(H, Hs, hs, t, rho, N, icosts=None, M=100, threads=1):
+def Error_cost(H, Hs, hs, t, rho, N, icosts=None, M=500, threads=1):
     st = time.time()
     n = H.shape[0] # actually 2^n
     L = len(Hs)

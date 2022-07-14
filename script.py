@@ -6,7 +6,10 @@ from diagonalize import *
 from phase import *
 from QDrift import *
 from hamiltonian import *
+import sys
 
+sys.setrecursionlimit(sys.getrecursionlimit()*4)
+print(sys.getrecursionlimit())
 
 def Simulation_cost(Chs, CPs):
     """ Returns the cost of the simulation,
@@ -109,8 +112,8 @@ Ns = [2**i + 10 for i in range(5, M)]
 st = time.time()
 
 # print(time.time()-st)
-errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, threads=12) for N in Ns])
-errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, threads=12) for N in Ns])
+errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, threads=32) for N in Ns])
+errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, threads=32) for N in Ns])
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
