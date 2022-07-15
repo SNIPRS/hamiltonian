@@ -108,12 +108,12 @@ t = 1
 M = 15
 
 rho = rand_rho(n)
-Ns = [2**i + 10 for i in range(5, M)]
+Ns = [2**i + 10 for i in range(7, M)]
 st = time.time()
 
 # print(time.time()-st)
-errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=5000, threads=32) for N in Ns])
-errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=5000, threads=32) for N in Ns])
+errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=5000, threads=48) for N in Ns])
+errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=5000, threads=48) for N in Ns])
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
