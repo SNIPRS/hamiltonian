@@ -112,15 +112,15 @@ Ns = [2**i + 10 for i in range(6, M)]
 st = time.time()
 
 # print(time.time()-st)
-errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=1500, threads=48) for N in Ns])
-errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=1500, threads=48) for N in Ns])
+errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=3000, threads=48) for N in Ns])
+errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=3000, threads=48) for N in Ns])
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
 
-np.savetxt('save/rcosts.txt', rcosts)
-np.savetxt('save/tcosts.txt', tcosts)
-np.savetxt('save/errors.txt', errors)
-np.savetxt('save/errors1.txt', errors1)
-np.savetxt('save/Ns.txt', Ns)
+np.savetxt('save/rcosts-LiH.txt', rcosts)
+np.savetxt('save/tcosts-LiH.txt', tcosts)
+np.savetxt('save/errors-LiH.txt', errors)
+np.savetxt('save/errors1-LiH.txt', errors1)
+np.savetxt('save/Ns-LiH.txt', Ns)
 
