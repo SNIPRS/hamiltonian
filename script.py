@@ -11,7 +11,7 @@ import sys
 sys.setrecursionlimit(sys.getrecursionlimit()*4)
 print(sys.getrecursionlimit())
 
-def Simulation_cost(Chs, CPs):
+def Simulation_cost(Chs, CPs, custom=False):
     """ Returns the cost of the simulation,
     total costs, individual costs in [crzs, toffolis]
     """
@@ -20,8 +20,7 @@ def Simulation_cost(Chs, CPs):
     n = len(CPs[0][0])
     for Ch, CP in zip(Chs, CPs):
         _, CZ, _ = diag_results(CP, True)
-        print(CZ, CP)
-        _, _, cost = logic_min(CZ, Ch)
+        _, _, cost = logic_min(CZ, Ch, custom)
         crzs += cost[0]
         Toffolis += cost[1]
         icosts.append([cost[0], cost[1]])
@@ -55,6 +54,7 @@ def Hs_sum_costs(SHs, Shs, icosts):
         for H, h in zip(SH, Sh):
             Hs_s.append(H); hs_s.append(h), costs.append(icost)
     return np.array(Hs_s), np.array(hs_s), costs
+
 
 n = 6
 Jx, Jy, Jz, h = np.random.normal(loc=0, scale=1, size=4)
