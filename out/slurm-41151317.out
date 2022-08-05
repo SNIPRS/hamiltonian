@@ -1,0 +1,21 @@
+4000
+Coefficients:  -0.9344206156632228 0.16267859659267783 0.03289904024845373 0.113590446962006
+crzs, toffolis, thetas:
+2 3 [2.803261846989668, 0.9344206156632229]
+crzs, toffolis, thetas:
+2 3 [0.4880357897780335, 0.16267859659267783]
+crzs, toffolis, thetas:
+2 3 [0.09869712074536119, 0.03289904024845373]
+crzs, toffolis, thetas:
+2 0 [0.056795223481003]
+crzs, toffolis, thetas:
+2 0 [0.056795223481003]
+crzs, toffolis, thetas:
+2 0 [0.056795223481003]
+crzs, toffolis, thetas:
+2 0 [0.056795223481003]
+crzs, toffolis, thetas:
+2 0 [0.056795223481003]
+crzs, toffolis, thetas:
+2 0 [0.056795223481003]
+Running N=74:   0%|          | 0/1000 [00:00<?, ?it/s]
