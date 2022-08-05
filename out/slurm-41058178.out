@@ -1,0 +1,21 @@
+4000
+Coefficients:  -0.21593480462572123 -0.9092654924827148 2.0532207010858277 0.5666093825053454
+crzs, toffolis, thetas:
+2 3 [0.6478044138771635, 0.21593480462572145]
+crzs, toffolis, thetas:
+2 3 [2.7277964774481447, 0.9092654924827146]
+crzs, toffolis, thetas:
+2 3 [0.12352320392210281, 2.0532207010858277]
+crzs, toffolis, thetas:
+2 0 [0.2833046912526727]
+crzs, toffolis, thetas:
+2 0 [0.2833046912526727]
+crzs, toffolis, thetas:
+2 0 [0.2833046912526727]
+crzs, toffolis, thetas:
+2 0 [0.2833046912526727]
+crzs, toffolis, thetas:
+2 0 [0.2833046912526727]
+crzs, toffolis, thetas:
+2 0 [0.2833046912526727]
+Running N=74:   0%|          | 0/1000 [00:00<?, ?it/s]slurmstepd: error: *** JOB 41058178 ON cdr2335 CANCELLED AT 2022-08-04T10:11:09 ***

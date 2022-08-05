@@ -77,8 +77,18 @@ Ns = [2**i + 10 for i in range(6, M)]
 st = time.time()
 
 # print(time.time()-st)
-errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=100, threads=12) for N in Ns])
-errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=100, threads=12) for N in Ns])
+errors_costs = []
+for N in Ns:
+    print(N)
+    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=100, threads=12))
+errors_costs = np.array(errors_costs)
+
+errors_costs1 = []
+for N in Ns:
+    print(N)
+    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=100, threads=12))
+errors_costs1 = np.array(errors_costs1)
+
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
