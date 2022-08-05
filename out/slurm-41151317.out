@@ -18,4 +18,4 @@ crzs, toffolis, thetas:
 2 0 [0.056795223481003]
 crzs, toffolis, thetas:
 2 0 [0.056795223481003]
-Running N=74:   0%|          | 0/1000 [00:00<?, ?it/s]
+Running N=74:   0%|          | 0/1000 [00:00<?, ?it/s]slurmstepd: error: *** JOB 41151317 ON cdr1326 CANCELLED AT 2022-08-04T23:25:09 ***
