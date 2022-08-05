@@ -56,16 +56,52 @@ def Hs_sum_costs(SHs, Shs, icosts):
     return np.array(Hs_s), np.array(hs_s), costs
 
 
-n = 6
-Jx, Jy, Jz, h = np.random.normal(loc=0, scale=1, size=4)
-print('Coefficients: ', Jx, Jy, Jz, h)
-# G = [[0,1], [0,5], [1,2], [1,4], [2,3], [3,4], [3,8], [4,5], [4,7], [5,6], [6,7], [7,8]]
-# print('Graph: ', G)
-Hm, CHs, Chs, CPs = Heisenberg_1d(n, Jx, Jy, Jz, h, True)
-Hm, Hs, hs, Ps = Heisenberg_1d(n, Jx, Jy, Jz, h, False)
-tcost, icosts = Simulation_cost(Chs, CPs, True)
-SHs, Shs = Hs_sum(CHs, Chs)
-Hs_s, hs_s, icosts = Hs_sum_costs(SHs, Shs, icosts)
+n, Hm, Hs, hs, Ps = LiH_hamiltonian()
+
+terms = list(zip(Hs, hs, Ps))
+terms1 = [list(term) for term in terms]
+terms = np.array(terms1, dtype=object)
+terms = terms[np.abs(terms[:, 1]).argsort()]
+
+
+
+# Reorder 
+terms[[16,22]] = terms[[22,16]]
+terms[[17,23]] = terms[[23,17]]
+terms[[18,20]] = terms[[20,18]]
+terms[[19,21]] = terms[[21,19]]
+
+# XY
+terms[5][:2], terms[6][:2] = -terms[5][:2], -terms[6][:2]
+terms[5][2], terms[6][2] = '-'+terms[5][2], '-'+terms[6][2]
+
+
+# Z
+terms[22][:2], terms[23][:2] = -terms[22][:2], -terms[23][:2]
+terms[22][2], terms[23][2] = '-'+terms[22][2], '-'+terms[23][2]
+
+def get_clique(i, j):
+    return np.sum(np.stack(terms[i:j][:, 0]), axis=0)
+
+for i, term in enumerate(terms):
+    print(i, term[1:])
+
+groups = [(0,4), (4,8), (8,12), 
+          (12,16), (16,20), (16,17),
+         (17,18), (20,22), (22,24),
+         (24,26)]
+hs_s = np.array([terms[0][1], terms[4][1], terms[8][1],
+         terms[12][1], terms[18][1], terms[16][1]-terms[18][1],
+         terms[17][1]-terms[18][1], terms[20][1], terms[22][1],
+         terms[24][1]])
+Hs_s = np.array([get_clique(group[0], group[1]) for group in groups])
+icosts = np.array([[2,3], [1,3], [2,3], 
+                   [2,3], [1,1], [1,0], 
+                   [1,0], [1,2], [1,0],
+                   [1,0]])
+
+# Get rid of first identity
+Hs, hs = Hs[1:], hs[1:]
 
 
 # Start simulation
@@ -77,8 +113,8 @@ Ns = [2**i + 10 for i in range(6, M)]
 st = time.time()
 
 # print(time.time()-st)
-errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=100, threads=12) for N in Ns])
-errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=100, threads=12) for N in Ns])
+errors_costs = np.array([Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=1000, threads=48) for N in Ns])
+errors_costs1 = np.array([Error_cost(Hm, Hs, hs, t, rho, N, M=1000, threads=48) for N in Ns])
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
