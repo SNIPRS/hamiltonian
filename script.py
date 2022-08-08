@@ -58,6 +58,7 @@ def Hs_sum_costs(SHs, Shs, icosts):
 
 n = 6
 Jx, Jy, Jz, h = np.random.normal(loc=0, scale=1, size=4)
+Jx, Jy, Jz, h = -1.0614106051873797, -0.7142265195762633, -1.27989762445829, -0.6121276477817922
 print('Coefficients: ', Jx, Jy, Jz, h)
 # G = [[0,1], [0,5], [1,2], [1,4], [2,3], [3,4], [3,8], [4,5], [4,7], [5,6], [6,7], [7,8]]
 # print('Graph: ', G)
@@ -80,13 +81,13 @@ st = time.time()
 errors_costs = []
 for N in Ns:
     print(N)
-    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=1000, threads=48))
+    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=1000, threads=1))
 errors_costs = np.array(errors_costs)
 
 errors_costs1 = []
 for N in Ns:
     print(N)
-    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=1000, threads=48))
+    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=1000, threads=1))
 errors_costs1 = np.array(errors_costs1)
 
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
