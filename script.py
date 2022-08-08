@@ -56,7 +56,7 @@ def Hs_sum_costs(SHs, Shs, icosts):
     return np.array(Hs_s), np.array(hs_s), costs
 
 
-n = 4
+n = 6
 Jx, Jy, Jz, h = np.random.normal(loc=0, scale=1, size=4)
 print('Coefficients: ', Jx, Jy, Jz, h)
 # G = [[0,1], [0,5], [1,2], [1,4], [2,3], [3,4], [3,8], [4,5], [4,7], [5,6], [6,7], [7,8]]
@@ -73,28 +73,28 @@ t = 1
 M = 15
 
 rho = rand_rho(n)
-Ns = [2**i + 10 for i in range(6, M)]
+Ns = [2**i + 10 for i in range(7, M)]
 st = time.time()
 
 # print(time.time()-st)
 errors_costs = []
 for N in Ns:
     print(N)
-    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=200, threads=24))
+    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=1000, threads=48))
 errors_costs = np.array(errors_costs)
 
 errors_costs1 = []
 for N in Ns:
     print(N)
-    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=200, threads=24))
+    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=1000, threads=48))
 errors_costs1 = np.array(errors_costs1)
 
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
-np.savetxt('save/rcosts-4H1d.txt', rcosts)
-np.savetxt('save/tcosts-4H1d.txt', tcosts)
-np.savetxt('save/errors-4H1d.txt', errors)
-np.savetxt('save/errors1-4H1d.txt', errors1)
-np.savetxt('save/Ns-4H1d.txt', Ns)
+np.savetxt('save/rcosts-6H1d.txt', rcosts)
+np.savetxt('save/tcosts-6H1d.txt', tcosts)
+np.savetxt('save/errors-6H1d.txt', errors)
+np.savetxt('save/errors1-6H1d.txt', errors1)
+np.savetxt('save/Ns-6H1d.txt', Ns)
 
