@@ -80,13 +80,13 @@ st = time.time()
 errors_costs = []
 for N in Ns:
     print(N)
-    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=200, threads=12))
+    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=200, threads=24))
 errors_costs = np.array(errors_costs)
 
 errors_costs1 = []
 for N in Ns:
     print(N)
-    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=200, threads=12))
+    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=200, threads=24))
 errors_costs1 = np.array(errors_costs1)
 
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
