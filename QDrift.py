@@ -52,7 +52,7 @@ def rand_rho(n):
     return rho
 
 
-def Error_cost(H, Hs, hs, t, rho, N, icosts=None, M=500, threads=1):
+def Error_cost(H, Hs, hs, t, rho, N, icosts=None, M=100, threads=1):
     st = time.time()
     n = H.shape[0] # actually 2^n
     L = len(Hs)
@@ -69,12 +69,18 @@ def Error_cost(H, Hs, hs, t, rho, N, icosts=None, M=500, threads=1):
         idx = np.random.choice(hs.size, N, p=prob)
         His, pis = Hs[idx], prob[idx]
         sgns = np.sign(hs[idx])
-        Vis = np.array([scipy.linalg.expm(1j*tau*His[j]*sgns[j]) for j in range(N)] +
-                       (threads-N%threads)*[np.identity(n)])
-        Visp = np.split(Vis, threads)
-        with Pool(threads) as p:
-            Vi_pooled = np.array(p.map(np.linalg.multi_dot, Visp))
-        Vi = np.linalg.multi_dot(Vi_pooled)
+        if threads > 1:
+            Vis = np.array([scipy.linalg.expm(1j*tau*His[j]*sgns[j]) for j in range(N)] +
+                           (threads-N%threads)*[np.identity(n)])
+            Visp = np.split(Vis, threads)
+            with Pool(threads) as p:
+                Vi_pooled = np.array(p.map(np.linalg.multi_dot, Visp))
+            Vi = np.linalg.multi_dot(Vi_pooled)
+        elif threads == 1:
+            Vis = np.array([scipy.linalg.expm(1j*tau*His[j]*sgns[j]) for j in range(N)])
+            Vi = np.linalg.multi_dot(Vis)
+        else:
+            raise ValueError
         Vi = np.array(Vi).reshape((n,n))
         pi = np.prod(pis)
         tcost += np.sum([icosts[j][0] + icosts[j][1] for j in idx])

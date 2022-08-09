@@ -81,21 +81,21 @@ st = time.time()
 errors_costs = []
 for N in Ns:
     print(N)
-    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=1000, threads=1))
+    errors_costs.append(Error_cost(Hm, Hs_s, hs_s, t, rho, N, icosts, M=100, threads=1))
 errors_costs = np.array(errors_costs)
 
 errors_costs1 = []
 for N in Ns:
     print(N)
-    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=1000, threads=1))
+    errors_costs1.append(Error_cost(Hm, Hs, hs, t, rho, N, M=100, threads=1))
 errors_costs1 = np.array(errors_costs1)
 
 errors, errors1 = errors_costs[:, 0], errors_costs1[:, 0]
 tcosts, rcosts = errors_costs[:, 1], errors_costs[:, 2]
 
-np.savetxt('save/rcosts-6H1d.txt', rcosts)
-np.savetxt('save/tcosts-6H1d.txt', tcosts)
-np.savetxt('save/errors-6H1d.txt', errors)
-np.savetxt('save/errors1-6H1d.txt', errors1)
-np.savetxt('save/Ns-6H1d.txt', Ns)
+np.savetxt('save/rcosts-6H1d1.txt', rcosts)
+np.savetxt('save/tcosts-6H1d1.txt', tcosts)
+np.savetxt('save/errors-6H1d1.txt', errors)
+np.savetxt('save/errors1-6H1d1.txt', errors1)
+np.savetxt('save/Ns-6H1d1.txt', Ns)
 
