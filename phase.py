@@ -88,11 +88,11 @@ def logic_min(pauli_strings, ais, custom=False):
             crzs += 1
             Toffolis += cost(fpos) + cost(fneg)
             debug_thetas.append(theta)
-    if custom:
+    if custom==True:
         if n == 4:
             crzs, Toffolis = 1, min(1, Toffolis)
         if n == 6:
-            crzs, Toffolis = 2, min(3, Toffolis)
+            crzs, Toffolis = 1, min(3, Toffolis)
     print('crzs, toffolis, thetas:')
     print(crzs, Toffolis, debug_thetas)
     return circuits, costs, [crzs, Toffolis]
